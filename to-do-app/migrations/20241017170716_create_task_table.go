@@ -21,6 +21,7 @@ func mig_20241017170716_create_task_table_up(tx *sql.Tx) error {
 
 		CREATE TABLE IF NOT EXISTS tasks (
 			uuid uuid PRIMARY KEY,
+			title varchar(255) NOT NULL,
 			deadline timestamptz NULL,
 			description text NULL,
 			status tasks_status NOT NULL DEFAULT 'PENDING',
