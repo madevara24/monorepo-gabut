@@ -4,6 +4,7 @@ import (
 	"to-do-app/internal/app/repository/task"
 	"to-do-app/internal/app/usecase/healthcheck"
 	"to-do-app/internal/app/usecase/task/create"
+	"to-do-app/internal/app/usecase/task/getbyuuid"
 	"to-do-app/internal/pkg/datasource"
 )
 
@@ -12,7 +13,8 @@ type Container struct {
 	HealthCheckInport healthcheck.Inport
 
 	// TASK
-	CreateTaskInport create.Inport
+	CreateTaskInport    create.Inport
+	GetTaskByUUIDInport getbyuuid.Inport
 }
 
 func NewContainer(datasource *datasource.DataSource) *Container {
@@ -23,6 +25,7 @@ func NewContainer(datasource *datasource.DataSource) *Container {
 		HealthCheckInport: healthcheck.NewUsecase(datasource.Postgre),
 
 		// TASK
-		CreateTaskInport: create.NewCreateTaskInteractor(taskRepo),
+		CreateTaskInport:    create.NewUsecase(taskRepo),
+		GetTaskByUUIDInport: getbyuuid.NewUsecase(taskRepo),
 	}
 }

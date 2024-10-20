@@ -9,7 +9,7 @@ import (
 	"github.com/madevara24/go-common/response"
 )
 
-func CreateTask(inport create.Inport) gin.HandlerFunc {
+func Create(inport create.Inport) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		req := create.InportRequest{}
 

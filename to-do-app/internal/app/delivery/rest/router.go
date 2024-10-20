@@ -29,5 +29,6 @@ func (h *Router) RegisterRouter() {
 	// PING
 	h.router.GET("/health", healthcheck.HealthCheckHandler(h.container.HealthCheckInport))
 
-	h.router.POST("/tasks", task.CreateTask(h.container.CreateTaskInport))
+	h.router.POST("/tasks", task.Create(h.container.CreateTaskInport))
+	h.router.GET("/tasks/:uuid", task.GetByUUID(h.container.GetTaskByUUIDInport))
 }

@@ -1,4 +1,4 @@
-package create
+package getbyuuid
 
 import (
 	"context"
@@ -15,14 +15,12 @@ func NewUsecase(taskRepo task.IRepository) Inport {
 	}
 }
 
-func (i interactor) Execute(ctx context.Context, req InportRequest) error {
-	task, err := req.MapIntoTask()
+func (i interactor) Execute(ctx context.Context, req InportRequest) (InportResponse, error) {
+	task, err := i.taskRepo.GetByUUID(ctx, req.UUID)
 	if err != nil {
-		return err
+		return InportResponse{}, err
 	}
-	err = i.taskRepo.Create(ctx, task)
-	if err != nil {
-		return err
-	}
-	return nil
+	return InportResponse{
+		Task: task,
+	}, nil
 }

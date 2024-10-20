@@ -9,17 +9,17 @@ import (
 )
 
 type Task struct {
-	UUID        string      `json:"uuid"`
-	Title       string      `json:"title"`
-	Description null.String `json:"description"`
-	Deadline    null.Time   `json:"deadline"`
-	Status      TaskStatus  `json:"status"`
-	CreatedBy   string      `json:"created_by"`
-	UpdatedBy   string      `json:"updated_by"`
-	DeletedBy   null.String `json:"deleted_by"`
-	CreatedAt   time.Time   `json:"created_at"`
-	UpdatedAt   time.Time   `json:"updated_at"`
-	DeletedAt   null.Time   `json:"deleted_at"`
+	UUID        string      `json:"uuid" db:"uuid"`
+	Title       string      `json:"title" db:"title"`
+	Description null.String `json:"description" db:"description"`
+	Deadline    null.Time   `json:"deadline" db:"deadline"`
+	Status      TaskStatus  `json:"status" db:"status"`
+	CreatedBy   string      `json:"created_by" db:"created_by"`
+	UpdatedBy   string      `json:"updated_by" db:"updated_by"`
+	DeletedBy   null.String `json:"deleted_by" db:"deleted_by"`
+	CreatedAt   time.Time   `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time   `json:"updated_at" db:"updated_at"`
+	DeletedAt   null.Time   `json:"deleted_at" db:"deleted_at"`
 }
 
 const (
@@ -32,12 +32,14 @@ const (
 	TASK_STATUS_COMPLETED   TaskStatus = "COMPLETED"
 
 	// ERROR CODE
-	ERROR_CODE_TASK_TITLE_REQUIRED   = "TASK_001"
-	ERROR_CODE_TASK_STATUS_NOT_VALID = "TASK_002"
+	ERROR_CODE_TASK_NOT_FOUND        = "TASK_001"
+	ERROR_CODE_TASK_TITLE_REQUIRED   = "TASK_002"
+	ERROR_CODE_TASK_STATUS_NOT_VALID = "TASK_003"
 )
 
 // ERRORS
 var (
+	ERROR_TASK_NOT_FOUND        = commonError.NewErr(http.StatusNotFound, ERROR_CODE_TASK_NOT_FOUND, "task not found")
 	ERROR_TASK_TITLE_REQUIRED   = commonError.NewErr(http.StatusBadRequest, ERROR_CODE_TASK_TITLE_REQUIRED, "title is required")
 	ERROR_TASK_STATUS_NOT_VALID = commonError.NewErr(http.StatusBadRequest, ERROR_CODE_TASK_STATUS_NOT_VALID, "status is not valid")
 )
