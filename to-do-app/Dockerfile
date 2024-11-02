@@ -1,5 +1,6 @@
+
 # Use the official Go image as the base image
-FROM golang:1.22-alpine AS build
+FROM golang:1.23-alpine AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -14,7 +15,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -o to-do-app .
 
 # Use a minimal alpine image for the final stage
 FROM alpine:latest
@@ -23,10 +24,10 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Copy the binary from the build stage
-COPY --from=build /app/main .
+COPY --from=build /app/to-do-app /app/.env .
 
 # Expose port 8080
 EXPOSE 8080
 
 # Run the binary
-CMD ["sh", "-c", "./main"]
+CMD ["sh", "-c", "./to-do-app up && ./to-do-app start"]
