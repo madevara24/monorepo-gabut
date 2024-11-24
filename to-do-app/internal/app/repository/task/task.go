@@ -37,7 +37,7 @@ func (r *repo) GetByUUID(ctx context.Context, taskUUID string) (entities.Task, e
 	query := `
 		SELECT t."uuid", t."title", t."deadline", t."description", t."status", t."created_by", t."updated_by", t."deleted_by", t."created_at", t."updated_at", t."deleted_at"
 		FROM tasks t
-		WHERE t."uuid" = $1::uuid
+		WHERE t."uuid" = $1::uuid AND t."deleted_at" IS NULL
 	`
 
 	var task entities.Task
@@ -50,4 +50,23 @@ func (r *repo) GetByUUID(ctx context.Context, taskUUID string) (entities.Task, e
 		return entities.Task{}, err
 	}
 	return task, nil
+}
+
+func (r *repo) GetAll(ctx context.Context) ([]entities.Task, error) {
+	query := `
+		SELECT t."uuid", t."title", t."deadline", t."description", t."status", t."created_by", t."updated_by", t."deleted_by", t."created_at", t."updated_at", t."deleted_at"
+		FROM tasks t
+		WHERE t."deleted_at" IS NULL
+	`
+
+	var tasks []entities.Task
+	err := r.datasource.Postgre.SelectContext(ctx, &tasks, query)
+	if err == sql.ErrNoRows {
+		return nil, entities.ERROR_TASK_NOT_FOUND
+	}
+
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
 }

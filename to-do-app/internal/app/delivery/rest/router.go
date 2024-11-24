@@ -30,5 +30,6 @@ func (h *Router) RegisterRouter() {
 	h.router.GET("/health", healthcheck.HealthCheckHandler(h.container.HealthCheckInport))
 
 	h.router.POST("/tasks", task.Create(h.container.CreateTaskInport))
+	h.router.GET("/tasks", task.GetAll(h.container.GetAllTaskInport))
 	h.router.GET("/tasks/:uuid", task.GetByUUID(h.container.GetTaskByUUIDInport))
 }

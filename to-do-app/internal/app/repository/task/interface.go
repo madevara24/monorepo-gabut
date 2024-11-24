@@ -11,7 +11,7 @@ type IRepository interface {
 	// Update(ctx context.Context, task entities.Task) (entities.Task, error)
 	// Delete(ctx context.Context, uuid string) error
 	GetByUUID(ctx context.Context, uuid string) (entities.Task, error)
-	// GetAll(ctx context.Context) ([]entities.Task, error)
+	GetAll(ctx context.Context) ([]entities.Task, error)
 }
 
 type repo struct {
