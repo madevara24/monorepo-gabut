@@ -1,0 +1,49 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: docker
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*-json.log
+    pipeline_stages:
+      # Parse the outer JSON (Docker's format)
+      - json:
+          expressions:
+            log:
+      # Parse the inner JSON (TDR log)
+      # - json:
+      #     expressions:
+      #       xtime:
+      #       trace:
+      #       span:
+      #       level:
+      #       message:
+      #       _app_name:
+      #       _app_version:
+      #       _app_port:
+      #       _app_tag:
+      #       _app_method:
+      #       _app_uri:
+      #       _app_response_code:
+      #       _app_exec_time:
+      #       _app_request_header:
+      #       _app_request:
+      #       _app_response:
+      #     source: log
+      # - labels:
+      #     level:
+      #     app_name:
+      #     method:
+      #     uri:
+      #     response_code:

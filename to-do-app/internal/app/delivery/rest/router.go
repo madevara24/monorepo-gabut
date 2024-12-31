@@ -25,6 +25,8 @@ func NewRouter(ctx context.Context, router *gin.Engine, datasource *datasource.D
 }
 
 func (h *Router) RegisterRouter() {
+
+	h.router.Use(SetTDRMiddleware())
 	h.router.Use(gin.Recovery())
 	// PING
 	h.router.GET("/health", healthcheck.HealthCheckHandler(h.container.HealthCheckInport))

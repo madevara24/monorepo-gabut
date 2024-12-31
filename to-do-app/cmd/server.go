@@ -11,6 +11,7 @@ import (
 	"to-do-app/internal/app/delivery/rest"
 	"to-do-app/internal/pkg/datasource"
 
+	"github.com/madevara24/go-common/logger"
 	"github.com/madevara24/go-common/server"
 	ginCommon "github.com/madevara24/go-common/server/gin"
 
@@ -26,6 +27,10 @@ var serverCmd = &cobra.Command{
 }
 
 func run() {
+	logger.NewLogger(logger.Option{
+		IsEnable: true,
+	})
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
