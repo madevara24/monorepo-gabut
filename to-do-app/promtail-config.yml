@@ -17,33 +17,16 @@ scrape_configs:
           job: docker
           __path__: /var/lib/docker/containers/*/*-json.log
     pipeline_stages:
+      - regex:
+          expression: '/var/lib/docker/containers/(?P<container_id>[a-f0-9]{64})/'
+          source: filename
+      - labels:
+          container_id:
       # Parse the outer JSON (Docker's format)
       - json:
           expressions:
-            log:
-      # Parse the inner JSON (TDR log)
-      # - json:
-      #     expressions:
-      #       xtime:
-      #       trace:
-      #       span:
-      #       level:
-      #       message:
-      #       _app_name:
-      #       _app_version:
-      #       _app_port:
-      #       _app_tag:
-      #       _app_method:
-      #       _app_uri:
-      #       _app_response_code:
-      #       _app_exec_time:
-      #       _app_request_header:
-      #       _app_request:
-      #       _app_response:
-      #     source: log
-      # - labels:
-      #     level:
-      #     app_name:
-      #     method:
-      #     uri:
-      #     response_code:
+            log: log
+            stream: stream
+            time: time
+      - output:
+          source: log
