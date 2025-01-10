@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-  go-server:
+  to-do-service:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: to-do-service/Dockerfile
     ports:
       - "8080:8080"
-    env_file: ".env"
+    env_file: "to-do-service/.env"
     logging:
       driver: "json-file"
       options:
