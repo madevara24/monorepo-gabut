@@ -1,0 +1,23 @@
+{
+  "name": "try-graphql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "yarn git-cz"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
