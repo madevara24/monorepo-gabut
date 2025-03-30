@@ -13,8 +13,8 @@ import (
 )
 
 type DataSource struct {
-	Postgre *sqlx.DB
-	Mapper  mapper.IMapper
+	Postgres *sqlx.DB
+	Mapper   mapper.IMapper
 }
 
 func NewDataSource() *DataSource {
@@ -36,7 +36,7 @@ func NewDataSource() *DataSource {
 	postgresDB.SetConnMaxLifetime(time.Duration(config.Get().DBMaxTTLConn) * time.Second)
 
 	return &DataSource{
-		Postgre: postgresDB,
-		Mapper:  mapper.NewPostgresMapper(),
+		Postgres: postgresDB,
+		Mapper:   mapper.NewPostgresMapper(),
 	}
 }

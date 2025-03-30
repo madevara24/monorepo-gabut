@@ -1,0 +1,30 @@
+type Planet {
+  uuid: String!
+  name: String!
+  size: Int!
+  type: String!
+  districts: [PlanetDistrict!]!
+  features: [PlanetaryFeature!]!
+}
+
+type PlanetDistrict {
+  uuid: String!
+  type: String!
+  level: Int!
+  buildings: [PlanetBuilding!]!
+}
+
+type PlanetBuilding {
+  uuid: String!
+  type: String!
+  level: Int!
+}
+
+type PlanetaryFeature {
+  uuid: String!
+  type: String!
+}
+
+type Query {
+  planetDashboard(planetUUID: String!): Planet!
+} 
