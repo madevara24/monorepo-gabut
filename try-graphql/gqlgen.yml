@@ -1,0 +1,33 @@
+# Schema location
+schema:
+  - graph/schema.graphqls
+
+# Generated code location
+exec:
+  filename: graph/generated/generated.go
+
+# Model configuration
+model:
+  filename: graph/model/models_gen.go
+
+# Tell gqlgen to use your existing entities
+models:
+  Planet:
+    model: try-graphql/internal/app/entity.Planet
+  PlanetDistrict:
+    model: try-graphql/internal/app/entity.PlanetDistrict
+  PlanetBuilding:
+    model: try-graphql/internal/app/entity.PlanetBuilding
+  PlanetaryFeature:
+    model: try-graphql/internal/app/entity.PlanetaryFeature
+
+# Resolver configuration
+resolver:
+  layout: follow-schema
+  dir: internal/app/delivery/graphql  # Where your router.go and resolver.go are
+  package: graphql
+  filename_template: "{name}.resolvers.go"
+
+# Automatically bind to your entity package
+autobind:
+  - try-graphql/internal/app/entity
