@@ -8,6 +8,7 @@ import (
 	"time"
 	"try-graphql/config"
 	"try-graphql/internal/app"
+	"try-graphql/internal/app/delivery/graphql"
 	"try-graphql/internal/app/delivery/rest"
 	"try-graphql/internal/pkg/datasource"
 
@@ -48,9 +49,13 @@ func run() {
 
 	container := app.NewContainer(datasource)
 
-	router := rest.NewRouter(ctx, ginHttpServer.GetRouter(), datasource, container)
+	// Register REST routes
+	restRouter := rest.NewRouter(ctx, ginHttpServer.GetRouter(), datasource, container)
+	restRouter.RegisterRouter()
 
-	router.RegisterRouter()
+	// Register GraphQL routes
+	graphqlRouter := graphql.NewRouter(ctx, ginHttpServer.GetRouter(), container)
+	graphqlRouter.RegisterRouter()
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)

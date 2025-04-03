@@ -1,6 +1,6 @@
 # Schema location
 schema:
-  - graph/schema.graphqls
+  - internal/app/delivery/graphql/schema.graphql
 
 # Generated code location
 exec:

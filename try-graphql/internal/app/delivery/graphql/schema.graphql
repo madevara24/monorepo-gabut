@@ -3,7 +3,7 @@ type Planet {
   name: String!
   size: Int!
   type: String!
-  districts: [PlanetDistrict!]!
+  districts: [PlanetDistrict!]
   features: [PlanetaryFeature!]!
 }
 
@@ -11,7 +11,7 @@ type PlanetDistrict {
   uuid: String!
   type: String!
   level: Int!
-  buildings: [PlanetBuilding!]!
+  buildings: [PlanetBuilding!]
 }
 
 type PlanetBuilding {
@@ -26,5 +26,5 @@ type PlanetaryFeature {
 }
 
 type Query {
-  planetDashboard(planetUUID: String!): Planet!
+  PlanetDashboard(planetUUID: String!): Planet!
 } 

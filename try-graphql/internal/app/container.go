@@ -1,7 +1,6 @@
 package app
 
 import (
-	"try-graphql/internal/app/delivery/graphql"
 	"try-graphql/internal/app/repository/planet"
 	planetBuilding "try-graphql/internal/app/repository/planet_building"
 	planetDistrict "try-graphql/internal/app/repository/planet_district"
@@ -15,8 +14,8 @@ type Container struct {
 	// PING
 	HealthCheckInport healthcheck.Inport
 
-	// GraphQL
-	GraphQLResolver *graphql.Resolver
+	// Planet
+	PlanetDashboardInport dashboard.Inport
 }
 
 func NewContainer(datasource *datasource.DataSource) *Container {
@@ -29,14 +28,11 @@ func NewContainer(datasource *datasource.DataSource) *Container {
 	// Usecases
 	planetDashboard := dashboard.New(planetRepo, districtRepo, buildingRepo, featureRepo)
 
-	// GraphQL
-	graphqlResolver := graphql.New(planetDashboard)
-
 	return &Container{
 		// PING
 		HealthCheckInport: healthcheck.NewUsecase(datasource.Postgres),
 
-		// GraphQL
-		GraphQLResolver: graphqlResolver,
+		// Planet
+		PlanetDashboardInport: planetDashboard,
 	}
 }
