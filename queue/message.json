@@ -1,0 +1,6 @@
+{
+  "event": "demo.message",
+  "note": "edit this file to change the payload",
+  "seq": "{{seq}}",
+  "time": "{{time}}"
+}
